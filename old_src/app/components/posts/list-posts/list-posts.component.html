@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <app-Post-table [Posts]="Posts" (onConfirmDelete)="delete($event)"
+                (onRequestUpdate)="update($event)"></app-Post-table>
+        </div>
+    </div>
+</div>

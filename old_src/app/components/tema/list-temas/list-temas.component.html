@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <app-tema-table [temas]="temas" (onConfirmDelete)="delete($event)"
+                (onRequestUpdate)="update($event)"></app-tema-table>
+        </div>
+    </div>
+</div>
