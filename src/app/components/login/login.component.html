@@ -1,6 +1,6 @@
 <div class="login">
     <div class="login__container">
-        <form class="login__form" (ngSubmit)="onLogin()">
+        <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div class="login__title">
                 <p class="poppins-light">Efetue o login para acessar o sistema</p>
             </div>
