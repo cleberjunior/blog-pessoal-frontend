@@ -1,39 +1,39 @@
 export interface SavePostRequest {
-    name: string
-    email: string
-    phone: string
+    titulo: string
+    conteudo: string
+    autor: string
 }
 
 export interface UpdatePostRequest {
-    name: string
-    email: string
-    phone: string
+    titulo: string
+    conteudo: string
+    autor: string
 }
 
 export interface SavePostResponse {
     id: number
-    name: string
-    email: string
-    phone: string
+    titulo: string
+    conteudo: string
+    autor: string
 }
 
 export interface UpdatePostResponse {
     id: number
-    name: string
-    email: string
-    phone: string
+    titulo: string
+    conteudo: string
+    autor: string
 }
 
 export interface ListPostResponse {
     id: number
-    name: string
-    email: string
-    phone: string
+    titulo: string
+    conteudo: string
+    autor: string
 }
 
 export interface DetailPostResponse {
     id: number
-    name: string
-    email: string
-    phone: string
+    titulo: string
+    conteudo: string
+    autor: string
 }

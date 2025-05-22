@@ -36,7 +36,7 @@ export class TemaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['name', 'email', 'phone', 'actions']
+  displayedColumns: string[] = ['descricao', 'actions']
 
   private dialogManagerServiceSubscriptions?: Subscription
 
@@ -67,10 +67,6 @@ export class TemaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  formatPhone(phone: string) {
-    return `( ${phone.substring(0, 2)} ) ${phone.substring(2, 7)} - ${phone.substring(7)}`
-  }
-
   update(tema: TemaModelTable) {
     this.onRequestUpdate.emit(tema)
   }
@@ -78,7 +74,7 @@ export class TemaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   delete(tema: TemaModelTable) {
     this.dialogManagerService.showYesNoDialog(
       YesNoDialogComponent,
-      { title: 'Exclusão de tema', content: `Confirma a exclusão do tema ${tema.name}` }
+      { title: 'Exclusão de tema', content: `Confirma a exclusão do tema ${tema.descricao}` }
     ).subscribe(result => {
       if (result) {
         this.onConfirmDelete.emit(tema)

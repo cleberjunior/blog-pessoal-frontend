@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { PostModelTable } from '../../Post.models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
@@ -7,13 +6,14 @@ import { Subscription } from 'rxjs';
 import { SERVICES_TOKEN } from '../../../services/service.token';
 import { IDialogManagerService } from '../../../services/idialog-manager.service';
 import { DialogManagerService } from '../../../services/dialog-manager.service';
-import { YesNoDialogComponent } from '../../../commons/components/yes-no-dialog/yes-no-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CustomPaginator } from './custom-paginator';
+import { PostModelTable } from '../../../models/posts.models';
+import { YesNoDialogComponent } from '../../commons/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
-  selector: 'app-Post-table',
+  selector: 'app-post-table',
   imports: [
     MatTableModule, 
     MatButtonModule, 
@@ -21,8 +21,8 @@ import { CustomPaginator } from './custom-paginator';
     MatPaginatorModule, 
     MatTooltipModule
   ],
-  templateUrl: './Post-table.component.html',
-  styleUrl: './Post-table.component.scss',
+  templateUrl: './post-table.component.html',
+  styleUrl: './post-table.component.scss',
   providers: [
     { provide: SERVICES_TOKEN.DIALOG, useClass: DialogManagerService },
     { provide: MatPaginatorIntl, useClass: CustomPaginator }
@@ -30,13 +30,13 @@ import { CustomPaginator } from './custom-paginator';
 })
 export class PostTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
-  @Input() Posts: PostModelTable[] = []
+  @Input() posts: PostModelTable[] = []
 
   dataSource!: MatTableDataSource<PostModelTable>
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['name', 'email', 'phone', 'actions']
+  displayedColumns: string[] = ['titulo', 'conteudo', 'autor', 'actions']
 
   private dialogManagerServiceSubscriptions?: Subscription
 
@@ -53,8 +53,8 @@ export class PostTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['Posts'] && this.Posts) {
-      this.dataSource = new MatTableDataSource<PostModelTable>(this.Posts)
+    if (changes['posts'] && this.posts) {
+      this.dataSource = new MatTableDataSource<PostModelTable>(this.posts)
       if (this.paginator) {
         this.dataSource.paginator = this.paginator
       }
@@ -67,22 +67,18 @@ export class PostTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  formatPhone(phone: string) {
-    return `( ${phone.substring(0, 2)} ) ${phone.substring(2, 7)} - ${phone.substring(7)}`
+  update(post: PostModelTable) {
+    this.onRequestUpdate.emit(post)
   }
 
-  update(Post: PostModelTable) {
-    this.onRequestUpdate.emit(Post)
-  }
-
-  delete(Post: PostModelTable) {
+  delete(post: PostModelTable) {
     this.dialogManagerService.showYesNoDialog(
       YesNoDialogComponent,
-      { title: 'Exclusão de Poste', content: `Confirma a exclusão do Poste ${Post.name}` }
+      { title: 'Exclusão de Postagem', content: `Confirma a exclusão do Post ${post.titulo}` }
     ).subscribe(result => {
       if (result) {
-        this.onConfirmDelete.emit(Post)
-        const updatedList = this.dataSource.data.filter(c => c.id !== Post.id)
+        this.onConfirmDelete.emit(post)
+        const updatedList = this.dataSource.data.filter(c => c.id !== post.id)
         this.dataSource = new MatTableDataSource<PostModelTable>(updatedList)
       }
     })

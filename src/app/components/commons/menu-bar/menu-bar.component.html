@@ -1,16 +1,16 @@
 <div class="menu">
     <button mat-button [matMenuTriggerFor]="clientMenu">
-        <div class="menu-title">Clientes</div>
+        <div class="menu-title">Posts</div>
     </button>
     <mat-menu #clientMenu="matMenu" yPosition="below">
-        <button mat-menu-item (click)="navigateTo('clients/new-client')">Cadastro</button>
-        <button mat-menu-item (click)="navigateTo('clients/list')">Listagem</button>
+        <button mat-menu-item (click)="navigateTo('post/new-client')">Cadastro</button>
+        <button mat-menu-item (click)="navigateTo('posts/list')">Listagem</button>
     </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="scheduleMenu">
-        <div class="menu-title">Agendar</div>
+        <div class="menu-title">Temas</div>
     </button>
     <mat-menu #scheduleMenu="matMenu" yPosition="below">
-        <button mat-menu-item (click)="navigateTo('schedules/month')">Calendário</button>
+        <button mat-menu-item (click)="navigateTo('temas/list')">Cadastro</button>
     </mat-menu>
 </div>

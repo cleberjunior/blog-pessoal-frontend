@@ -10,7 +10,7 @@ import { ListTemasComponent } from './components/tema/list-temas/list-temas.comp
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent },
+    { path: 'dashboard', component: DashboardComponent, data: { title: 'Cadastrar Postagem' } },
 
     { path: 'post/new-post', component: NewPostComponent, data: { title: 'Cadastrar Postagem' } },
     { path: 'post/edit-post/:id', component: EditPostComponent, data: { title: 'Atualizar Postagem' } },

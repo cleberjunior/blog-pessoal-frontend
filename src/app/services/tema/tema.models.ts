@@ -3,7 +3,6 @@ export interface SaveTemaRequest {
 }
 
 export interface UpdateTemaRequest {
-    name: string
     descricao: string
 }
 

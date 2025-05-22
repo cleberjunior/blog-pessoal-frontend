@@ -1,18 +1,8 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <ng-containter matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Nome</th>
-        <td mat-cell *matCellDef="let tema">{{tema.name}}</td>
-    </ng-containter>
-
-    <ng-containter matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>E-mail</th>
-        <td mat-cell *matCellDef="let tema">{{tema.email}}</td>
-    </ng-containter>
-
-    <ng-containter matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef>Celular</th>
-        <td mat-cell *matCellDef="let tema">{{formatPhone(tema.phone)}}</td>
+    <ng-containter matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef>Descrição</th>
+        <td mat-cell *matCellDef="let Post">{{Post.descricao}}</td>
     </ng-containter>
 
     <ng-containter matColumnDef="actions">

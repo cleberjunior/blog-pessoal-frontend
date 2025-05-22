@@ -6,9 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-login',
+    standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
-    standalone: false
 })
 export class LoginComponent {
   loginForm: FormGroup = new FormGroup({

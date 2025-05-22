@@ -10,10 +10,10 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
 import { PostModelForm } from '../../../models/posts.models';
 
 @Component({
-    selector: 'app-new-Post',
+    selector: 'app-new-post',
     imports: [PostFormComponent],
-    templateUrl: './new-Post.component.html',
-    styleUrl: './new-Post.component.scss',
+    templateUrl: './new-post.component.html',
+    styleUrl: './new-post.component.scss',
     providers: [
         { provide: SERVICES_TOKEN.HTTP.POST, useClass: PostService },
         { provide: SERVICES_TOKEN.SNACKBAR, useClass: SnackbarManagerService },
@@ -39,7 +39,7 @@ export class NewPostComponent implements OnDestroy {
     const { id, ...request } = value;
     this.PostSubscription = this.PostService.save(request).subscribe(_ => {
       this.snackBarManager.show('Postagem cadastrada com sucesso!');
-      this.router.navigate(['Posts/list']);
+      this.router.navigate(['posts/list']);
     })
   }
 }

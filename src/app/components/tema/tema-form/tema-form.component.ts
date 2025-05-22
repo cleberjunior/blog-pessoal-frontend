@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TemaModelForm } from '../../tema.models';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { TemaModelForm } from '../../../models/tema.models';
 
 @Component({
     selector: 'app-tema-form',
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class TemaFormComponent {
 
-  @Input() tema: TemaModelForm = { id: 0, name: '', email: '', phone: '' }
+  @Input() tema: TemaModelForm = { id: 0, descricao: '' }
 
   @Output() temaSubmited = new EventEmitter<TemaModelForm>();
 

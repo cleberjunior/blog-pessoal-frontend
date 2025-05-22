@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'app-Post-form',
+    selector: 'app-post-form',
     imports: [
         FormsModule,
         MatInputModule,
@@ -20,11 +20,11 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class PostFormComponent {
 
-  @Input() Post: PostModelForm = { id: 0, name: '', email: '', phone: '' }
+  @Input() post: PostModelForm = { id: 0, titulo: '', conteudo: '', autor: '' }
 
-  @Output() PostSubmited = new EventEmitter<PostModelForm>();
+  @Output() postSubmited = new EventEmitter<PostModelForm>();
 
   onSubmit(_: NgForm) {
-    this.PostSubmited.emit(this.Post);
+    this.postSubmited.emit(this.post);
   }
 }

@@ -1,9 +1,13 @@
 export interface PostModelForm {
     id?: number
-    descricao: string
+    titulo: string
+    conteudo: string
+    autor: string
 }
 
 export interface PostModelTable {
     id: number
-    descricao: string
+    titulo: string
+    conteudo: string
+    autor: string
 }

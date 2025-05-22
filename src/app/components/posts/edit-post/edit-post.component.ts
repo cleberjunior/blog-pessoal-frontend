@@ -23,7 +23,7 @@ export class EditPostComponent {
 
   private httpSubscriptions: Subscription[] = []
 
-  post: PostModelForm = { id: 0, name: '', email: '', phone: '' }
+  post: PostModelForm = { id: 0, titulo: '', conteudo: '', autor: '' }
 
   constructor(
     @Inject(SERVICES_TOKEN.HTTP.POST) private readonly postService: IPostService,
@@ -35,7 +35,7 @@ export class EditPostComponent {
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id')
     if (!id) {
-      this.snackBarManager.show('Erro ao recuperar informações do poste')
+      this.snackBarManager.show('Erro ao recuperar informações do post')
       this.router.navigate(['posts/list'])
       return
     }

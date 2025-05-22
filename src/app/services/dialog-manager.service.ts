@@ -3,7 +3,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { IDialogManagerService } from './idialog-manager.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { YesNoDialogComponent } from '../commons/components/yes-no-dialog/yes-no-dialog.component';
+import { YesNoDialogComponent } from '../components/commons/yes-no-dialog/yes-no-dialog.component';
 
 @Injectable({
   providedIn: 'root'
