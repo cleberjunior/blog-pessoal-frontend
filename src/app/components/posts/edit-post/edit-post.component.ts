@@ -10,16 +10,13 @@ import { SnackbarManagerService } from '../../../services/snackbar-manager.servi
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
 import { CardHeaderComponent } from "../../commons/card-header/card-header.component";
 import { MenuBarComponent } from "../../commons/menu-bar/menu-bar.component";
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-edit-post',
-    imports: [
-      PostFormComponent, 
-      CardHeaderComponent, 
-      MenuBarComponent,
-      CardHeaderComponent, 
-      MenuBarComponent
-    ],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, PostFormComponent, CardHeaderComponent, MenuBarComponent],
     templateUrl: './edit-post.component.html',
     styleUrl: './edit-post.component.scss',
     providers: [

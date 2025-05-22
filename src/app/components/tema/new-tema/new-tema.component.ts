@@ -10,10 +10,13 @@ import { SnackbarManagerService } from '../../../services/snackbar-manager.servi
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
 import { CardHeaderComponent } from "../../commons/card-header/card-header.component";
 import { MenuBarComponent } from "../../commons/menu-bar/menu-bar.component";
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-new-tema',
-    imports: [TemaFormComponent, CardHeaderComponent, MenuBarComponent],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, TemaFormComponent, CardHeaderComponent, MenuBarComponent],
     templateUrl: './new-tema.component.html',
     styleUrl: './new-tema.component.scss',
     providers: [

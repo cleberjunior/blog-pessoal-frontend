@@ -10,14 +10,13 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
 import { PostModelForm } from '../../../models/posts.models';
 import { CardHeaderComponent } from '../../commons/card-header/card-header.component';
 import { MenuBarComponent } from '../../commons/menu-bar/menu-bar.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-new-post',
-    imports: [
-      PostFormComponent,
-      CardHeaderComponent, 
-      MenuBarComponent
-    ],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, PostFormComponent, CardHeaderComponent, MenuBarComponent],
     templateUrl: './new-post.component.html',
     styleUrl: './new-post.component.scss',
     providers: [
