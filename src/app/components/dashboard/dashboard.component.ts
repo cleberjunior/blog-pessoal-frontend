@@ -5,7 +5,7 @@ import { MenuBarComponent } from '../commons/menu-bar/menu-bar.component';
 @Component({
     selector: 'app-dashboard',
     standalone: true,
-    imports: [    
+    imports: [
         CardHeaderComponent, 
         MenuBarComponent
     ],

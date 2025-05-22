@@ -8,10 +8,16 @@ import { PostFormComponent } from '../post-form/post-form.component';
 import { SnackbarManagerService } from '../../../services/snackbar-manager.service';
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
 import { PostModelForm } from '../../../models/posts.models';
+import { CardHeaderComponent } from '../../commons/card-header/card-header.component';
+import { MenuBarComponent } from '../../commons/menu-bar/menu-bar.component';
 
 @Component({
     selector: 'app-new-post',
-    imports: [PostFormComponent],
+    imports: [
+      PostFormComponent,
+      CardHeaderComponent, 
+      MenuBarComponent
+    ],
     templateUrl: './new-post.component.html',
     styleUrl: './new-post.component.scss',
     providers: [
@@ -20,7 +26,9 @@ import { PostModelForm } from '../../../models/posts.models';
     ]
 })
 export class NewPostComponent implements OnDestroy {
-
+  
+  title = 'Cadastrar Postagem';
+  
   private PostSubscription?: Subscription; // para desinscrever e liberar recurso (memória)
 
   constructor(

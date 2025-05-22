@@ -8,10 +8,12 @@ import { TemaTableComponent } from '../tema-table/tema-table.component';
 import { SnackbarManagerService } from '../../../services/snackbar-manager.service';
 import { TemaModelTable } from '../../../models/tema.models';
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
+import { CardHeaderComponent } from "../../commons/card-header/card-header.component";
+import { MenuBarComponent } from "../../commons/menu-bar/menu-bar.component";
 
 @Component({
   selector: 'app-list-temas',
-  imports: [TemaTableComponent],
+  imports: [TemaTableComponent, CardHeaderComponent, MenuBarComponent],
   templateUrl: './list-temas.component.html',
   styleUrl: './list-temas.component.scss',
   providers: [
@@ -20,6 +22,8 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
   ]
 })
 export class ListTemasComponent implements OnInit, OnDestroy {
+
+  title = 'Temas Cadastrados';
 
   private httpSubscriptions: Subscription[] = []
 

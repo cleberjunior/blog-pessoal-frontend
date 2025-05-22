@@ -8,10 +8,18 @@ import { PostFormComponent } from '../post-form/post-form.component';
 import { PostModelForm } from '../../../models/posts.models';
 import { SnackbarManagerService } from '../../../services/snackbar-manager.service';
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
+import { CardHeaderComponent } from "../../commons/card-header/card-header.component";
+import { MenuBarComponent } from "../../commons/menu-bar/menu-bar.component";
 
 @Component({
     selector: 'app-edit-post',
-    imports: [PostFormComponent],
+    imports: [
+      PostFormComponent, 
+      CardHeaderComponent, 
+      MenuBarComponent,
+      CardHeaderComponent, 
+      MenuBarComponent
+    ],
     templateUrl: './edit-post.component.html',
     styleUrl: './edit-post.component.scss',
     providers: [
@@ -20,6 +28,8 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
     ]
 })
 export class EditPostComponent {
+
+  title = 'Atualizar Postagem';
 
   private httpSubscriptions: Subscription[] = []
 

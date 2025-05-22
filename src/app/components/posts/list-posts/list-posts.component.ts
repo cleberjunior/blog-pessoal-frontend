@@ -8,10 +8,16 @@ import { SnackbarManagerService } from '../../../services/snackbar-manager.servi
 import { PostModelTable } from '../../../models/posts.models';
 import { IPostService } from '../../../services/posts/iposts.service';
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
+import { CardHeaderComponent } from '../../commons/card-header/card-header.component';
+import { MenuBarComponent } from '../../commons/menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-list-posts',
-  imports: [PostTableComponent],
+  imports: [
+    PostTableComponent,
+    CardHeaderComponent, 
+    MenuBarComponent
+  ],
   templateUrl: './list-posts.component.html',
   styleUrl: './list-posts.component.scss',
   providers: [
@@ -20,6 +26,8 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
   ]
 })
 export class ListPostsComponent implements OnInit, OnDestroy {
+
+  title = 'Postagens Cadastrados';
 
   private httpSubscriptions: Subscription[] = []
 

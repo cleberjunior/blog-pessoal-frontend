@@ -8,10 +8,12 @@ import { TemaFormComponent } from '../tema-form/tema-form.component';
 import { TemaModelForm } from '../../../models/tema.models';
 import { SnackbarManagerService } from '../../../services/snackbar-manager.service';
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
+import { CardHeaderComponent } from "../../commons/card-header/card-header.component";
+import { MenuBarComponent } from "../../commons/menu-bar/menu-bar.component";
 
 @Component({
     selector: 'app-new-tema',
-    imports: [TemaFormComponent],
+    imports: [TemaFormComponent, CardHeaderComponent, MenuBarComponent],
     templateUrl: './new-tema.component.html',
     styleUrl: './new-tema.component.scss',
     providers: [
@@ -20,6 +22,8 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
     ]
 })
 export class NewTemaComponent implements OnDestroy {
+
+  title = 'Cadastrar Tema';
 
   private temaSubscription?: Subscription; // para desinscrever e liberar recurso (memória)
 

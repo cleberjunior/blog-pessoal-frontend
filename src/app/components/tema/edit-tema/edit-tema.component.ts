@@ -8,10 +8,16 @@ import { TemaFormComponent } from '../tema-form/tema-form.component';
 import { SnackbarManagerService } from '../../../services/snackbar-manager.service';
 import { TemaModelForm } from '../../../models/tema.models';
 import { ISnackbarManagerService } from '../../../services/isnackbar-manager.service';
+import { CardHeaderComponent } from "../../commons/card-header/card-header.component";
+import { MenuBarComponent } from "../../commons/menu-bar/menu-bar.component";
 
 @Component({
     selector: 'app-edit-tema',
-    imports: [TemaFormComponent],
+    imports: [
+      TemaFormComponent, 
+      CardHeaderComponent, 
+      MenuBarComponent
+    ],
     templateUrl: './edit-tema.component.html',
     styleUrl: './edit-tema.component.scss',
     providers: [
@@ -20,6 +26,8 @@ import { ISnackbarManagerService } from '../../../services/isnackbar-manager.ser
     ]
 })
 export class EditTemaComponent {
+
+  title = 'Atualizar Tema';
 
   private httpSubscriptions: Subscription[] = []
 
