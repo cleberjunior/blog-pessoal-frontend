@@ -1,31 +1,50 @@
-<div class="login">
-    <div class="login__container">
-        <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-            <div class="login__title">
-                <p class="poppins-light">Efetue o login para acessar o sistema</p>
-            </div>
-            <div class="login__fields">
-                <p class="poppins-regular">E-mail:</p>
-                <input class="poppins-regular" placeholder="Digite o seu email" formControlName="email" />
-            </div>
-            <div class="login__fields">
-                <p class="poppins-regular">Senha:</p>
-                <input class="poppins-regular" placeholder="Digite a sua senha" formControlName="password" />
-            </div>
-            
-            <div class="login__alert-message">
-                @if(loginForm.invalid) {
-                    @if(loginForm.hasError('invalidCredentials')) {
-                        <p class="poppins-semibold">Credenciais inválidas</p>
-                    }
-
-                    @if(loginForm.hasError('generalCredentialsError')) {
-                        <p class="poppins-semibold">Ocorreu um erro inesperado, tente novamente mais tarde</p>
-                    }
-                }
-            </div>
-            
-            <button class="poppins-regular login__button">Entrar</button>
+<div class="login-container">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <mat-card-title>Login - Blog Pessoal</mat-card-title>
+        <mat-card-subtitle>Entre com suas credenciais</mat-card-subtitle>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput 
+                   type="email" 
+                   formControlName="email"
+                   placeholder="seu@email.com">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+              {{ getErrorMessage('email') }}
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput 
+                   [type]="hidePassword ? 'password' : 'text'"
+                   formControlName="password">
+            <button mat-icon-button 
+                    matSuffix 
+                    (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'"
+                    type="button">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              {{ getErrorMessage('password') }}
+            </mat-error>
+          </mat-form-field>
+  
+          <button mat-raised-button 
+                  color="primary" 
+                  type="submit"
+                  class="full-width login-button"
+                  [disabled]="loginForm.invalid || isLoading">
+            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            <span *ngIf="!isLoading">Entrar</span>
+          </button>
         </form>
-    </div>
-</div>
+      </mat-card-content>
+    </mat-card>
+  </div>

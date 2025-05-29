@@ -1,22 +1,17 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NewPostComponent } from './components/posts/new-post/new-post.component';
-import { EditPostComponent } from './components/posts/edit-post/edit-post.component';
-import { ListPostsComponent } from './components/posts/list-posts/list-posts.component';
-import { NewTemaComponent } from './components/tema/new-tema/new-tema.component';
-import { EditTemaComponent } from './components/tema/edit-tema/edit-tema.component';
-import { ListTemasComponent } from './components/tema/list-temas/list-temas.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { PostListComponent } from './components/posts/post-list/post-list.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent, data: { title: 'Blog Pessoal' } },
-
-    { path: 'post/new-post', component: NewPostComponent, data: { title: 'Cadastrar Postagem' } },
-    { path: 'post/edit-post/:id', component: EditPostComponent, data: { title: 'Atualizar Postagem' } },
-    { path: 'posts/list', component: ListPostsComponent, data: { title: 'Postagens Cadastrados' } },
-
-    { path: 'tema/new-tema', component: NewTemaComponent, data: { title: 'Cadastrar Tema' } },
-    { path: 'tema/edit-tema/:id', component: EditTemaComponent, data: { title: 'Atualizar Tema' } },
-    { path: 'temas/list', component: ListTemasComponent, data: { title: 'Temas Cadastrados' } },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'posts', component: PostListComponent, canActivate: [AuthGuard] },
+    // { path: 'temas', component: TemaListComponent, canActivate: [AuthGuard] },
+    // { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
+    { path: '**', redirectTo: '/login' }
 ];

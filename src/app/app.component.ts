@@ -1,43 +1,37 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter, map, Subscription } from 'rxjs';
-import { CardHeaderComponent } from './components/commons/card-header/card-header.component';
-import { MenuBarComponent } from './components/commons/menu-bar/menu-bar.component';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AngularMaterialModule } from './components/commons/angular-material/angular-material.module';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    CommonModule, 
+    RouterOutlet, 
+    RouterLinkActive, 
+    AngularMaterialModule
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy  {
+export class AppComponent {
   title = 'Blog Pessoal';
 
-  private routeSubscription?: Subscription;
-
   constructor(
+    public readonly authService: AuthService,
     private readonly router: Router, 
-    private readonly activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.routeSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(() => this.getRouteTitle(this.activatedRoute))
-    ).subscribe(title => this.title = title)
+  logout(): void {
+    this.authService.logout();
   }
 
-  ngOnDestroy(): void {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe()
-    }
+  isLoginRoute(): boolean {
+    return this.router.url === '/login';
   }
 
-  private getRouteTitle(route: ActivatedRoute): string {
-    let child = route;
-    while (child.firstChild) {
-      child = child.firstChild;
-    }
-    return child.snapshot.data['title'] || 'Default Title';
+  navigateTo(path: string) {
+    this.router.navigate([path])
   }
 }

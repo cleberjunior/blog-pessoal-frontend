@@ -1,0 +1,129 @@
+.blog-container {
+    margin: 24px 0;
+  }
+
+  .blog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #333;
+    margin: 0;
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px;
+    gap: 16px;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 24px;
+  }
+
+  .post-card {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .post-avatar {
+    background-color: #3f51b5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.875rem;
+  }
+
+  .post-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .post-meta mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .post-content {
+    line-height: 1.6;
+    color: #666;
+    margin: 16px 0;
+    max-height: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .empty-card {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .empty-content {
+    text-align: center;
+    padding: 32px;
+  }
+
+  .empty-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #ccc;
+    margin-bottom: 16px;
+  }
+
+  .empty-content h3 {
+    margin: 16px 0 8px 0;
+    color: #666;
+  }
+
+  .empty-content p {
+    color: #999;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .blog-header {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }

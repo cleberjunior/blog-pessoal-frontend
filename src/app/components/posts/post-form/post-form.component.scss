@@ -1,10 +1,34 @@
-.fil-col {
-    width: 100%;
-}
-
-.div-button {
-    padding-top: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+.form-container {
+    min-width: 500px;
+  
+    @media (max-width: 768px) {
+      min-width: 300px;
+    }
+  
+    h2 {
+      color: #333;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+  }
+  
+  mat-dialog-content {
+    padding: 20px 0;
+  
+    .content-field {
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+    }
+  }
+  
+  mat-dialog-actions {
+    padding: 16px 0 0 0;
+    gap: 12px;
+  
+    button {
+      min-width: 100px;
+    }
+  }
+  

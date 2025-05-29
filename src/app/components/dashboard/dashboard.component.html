@@ -1,3 +1,112 @@
-<app-card-header>{{ title }}</app-card-header>
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
 
-<app-menu-bar></app-menu-bar>
+  <!-- Cards de Estatísticas -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <div class="stat-icon">
+            <mat-icon color="primary">article</mat-icon>
+          </div>
+          <div class="stat-info">
+            <h2>{{ stats.totalPosts }}</h2>
+            <p>Total de Posts</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <div class="stat-icon">
+            <mat-icon color="accent">people</mat-icon>
+          </div>
+          <div class="stat-info">
+            <h2>{{ stats.totalAuthors }}</h2>
+            <p>Autores</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <div class="stat-icon">
+            <mat-icon color="warn">trending_up</mat-icon>
+          </div>
+          <div class="stat-info">
+            <!-- <h2>{{ stats.monthlyPosts.length }}</h2>
+            <p>Meses Ativos</p> -->
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-content">
+    <!-- Posts por Autor -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Posts por Autor</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="author-stats">
+          <div *ngFor="let author of stats.postsByAuthor" class="author-stat">
+            <div class="author-info">
+              <span class="author-name">{{ author.name }}</span>
+              <span class="author-count">{{ author.count }} posts ({{ author.percentage }}%)</span>
+            </div>
+            <mat-progress-bar 
+              mode="determinate" 
+              [value]="author.percentage"
+              color="primary">
+            </mat-progress-bar>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Últimos Posts -->
+    <mat-card class="recent-posts-card">
+      <mat-card-header>
+        <mat-card-title>Últimos Posts</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let post of stats.latestPosts" style="height: auto;">
+            <!-- <mat-icon matListIcon>article</mat-icon> -->
+            <div matLine>
+              <strong>{{ post.titulo }}</strong>
+            </div>
+            <div matLine class="post-meta">
+              Por {{ post.autor }} • {{ post.criadoEm | date:'dd/MM/yyyy' }}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Posts por Mês -->
+  <mat-card class="monthly-chart-card">
+    <mat-card-header>
+      <mat-card-title>Posts por Tema</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="monthly-stats">
+        <div *ngFor="let month of stats.monthlyPosts" class="month-stat">
+          <span class="month-name">{{ month.month }}</span>
+          <span class="month-count">{{ month.count }} posts</span>
+          <mat-progress-bar 
+            mode="determinate" 
+            [value]="(month.count / stats.totalPosts) * 100"
+            color="accent">
+          </mat-progress-bar>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
