@@ -31,6 +31,7 @@ export class AuthService {
       map((tokenResponse) => {
         const token = tokenResponse.token;
         if (token) {
+          console.log('Token: ', token);
           localStorage.setItem(this.tokenKey, token);
           return ({ success: true, token, user: { email }}); 
         }

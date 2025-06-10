@@ -1,44 +1,152 @@
+<!-- blog.component.html -->
 <div class="blog-container">
-  <!-- Header com botão de ação -->
-  <div class="blog-header">
-    <h2 class="section-title">Posts Recentes</h2>
-  </div>
+  <!-- Header do Blog -->
 
-  <!-- Loading indicator -->
-  <div *ngIf="loading" class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
+  <!-- Loading -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
     <p>Carregando posts...</p>
   </div>
 
-  <!-- Grid de posts -->
-  <div class="posts-grid" *ngIf="!loading">
-    <mat-card 
-      *ngFor="let post of posts" 
-      class="post-card mat-elevation-2"
-      [class.mat-elevation-8]="true">
-      
-      <mat-card-header>
-        <div mat-card-avatar class="post-avatar">
-          <mat-icon>person</mat-icon>
-        </div>
-        <mat-card-title>{{ post.titulo }}</mat-card-title>
-        <mat-card-subtitle>
-          <div class="post-meta">
-            <span class="author">
-              <mat-icon inline>account_circle</mat-icon>
-              {{ post.autor }}
-            </span>
-            <span class="date">
-              <mat-icon inline>calendar_today</mat-icon>
-              {{ post.criadoEm ? formatDate(post.criadoEm) : '' }}
-            </span>
-          </div>
-        </mat-card-subtitle>
-      </mat-card-header>
+  <!-- Error -->
+  <mat-card class="error-card" *ngIf="error && !loading">
+    <mat-card-content>
+      <div class="error-content">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error }}</p>
+        <button mat-raised-button color="primary" (click)="carregarPosts()">
+          <mat-icon>refresh</mat-icon>
+          Tentar Novamente
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
+  <!-- Navegação por Temas -->
+  <nav class="tema-nav" *ngIf="postsPorTema.length > 0 && !loading">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>explore</mat-icon>
+          Navegar por Temas
+        </mat-card-title>
+      </mat-card-header>
       <mat-card-content>
-        <p class="post-content">{{ post.conteudo }}</p>
+        <div class="tema-chips">
+          <mat-chip 
+            *ngFor="let grupo of postsPorTema" 
+            (click)="scrollToTema(grupo.tema.id)"
+            class="tema-chip">
+            {{ grupo.tema.descricao }}
+            <span class="post-count">({{ grupo.posts.length }})</span>
+          </mat-chip>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </nav>
+
+  <!-- Posts organizados por Tema -->
+  <main class="blog-content" *ngIf="postsPorTema.length > 0 && !loading">
+    <section 
+      *ngFor="let grupo of postsPorTema; trackBy: trackByTema" 
+      class="tema-section"
+      [id]="'tema-' + grupo.tema.id">
+      
+      <!-- Cabeçalho do Tema -->
+      <div class="tema-header">
+        <h2>
+          <mat-icon>folder</mat-icon>
+          {{ grupo.tema.descricao }}
+          <span class="posts-count">({{ grupo.posts.length }} posts)</span>
+        </h2>
+        <mat-divider></mat-divider>
+      </div>
+
+      <!-- Grid de Posts -->
+      <div class="posts-grid">
+        <mat-card 
+          *ngFor="let post of grupo.posts; trackBy: trackByPost" 
+          class="post-card"
+          [class.destaque]="post.id === 1">
+          
+          <!-- Header do Post -->
+          <mat-card-header>
+            <div mat-card-avatar class="post-avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <mat-card-title>{{ post.titulo }}</mat-card-title>
+            <mat-card-subtitle>
+              <div class="post-meta">
+                <span class="autor">
+                  <mat-icon>account_circle</mat-icon>
+                  {{ post.autor }}
+                </span>
+                <span class="data">
+                  <mat-icon>schedule</mat-icon>
+                  {{ formatarData(post.criadoEm) }}
+                </span>
+              </div>
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <!-- Conteúdo do Post -->
+          <mat-card-content>
+            <p class="post-preview">
+              {{ getTruncatedContent(post.conteudo) }}
+            </p>
+          </mat-card-content>
+
+          <!-- Ações do Post -->
+          <mat-card-actions align="end">
+            <button mat-button color="primary">
+              <mat-icon>visibility</mat-icon>
+              Ler Mais
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="postMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            
+            <!-- Menu do Post -->
+            <mat-menu #postMenu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>share</mat-icon>
+                <span>Compartilhar</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>bookmark</mat-icon>
+                <span>Salvar</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>flag</mat-icon>
+                <span>Reportar</span>
+              </button>
+            </mat-menu>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mensagem quando não há posts -->
+  <div class="empty-state" *ngIf="postsPorTema.length === 0 && !loading && !error">
+    <mat-card>
+      <mat-card-content>
+        <div class="empty-content">
+          <mat-icon>inbox</mat-icon>
+          <h3>Nenhum post encontrado</h3>
+          <p>Ainda não há posts publicados no blog.</p>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
+
+  <!-- Botão Voltar ao Topo -->
+  <button 
+    mat-fab 
+    color="primary" 
+    class="scroll-top-btn"
+    (click)="scrollToTop()"
+    *ngIf="postsPorTema.length > 0">
+    <mat-icon>keyboard_arrow_up</mat-icon>
+  </button>
 </div>

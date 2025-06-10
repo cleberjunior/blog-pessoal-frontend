@@ -1,0 +1,44 @@
+<div class="blog-container">
+  <!-- Header com botão de ação -->
+  <div class="blog-header">
+    <h2 class="section-title">Posts Recentes</h2>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando posts...</p>
+  </div>
+
+  <!-- Grid de posts -->
+  <div class="posts-grid" *ngIf="!loading">
+    <mat-card 
+      *ngFor="let post of posts" 
+      class="post-card mat-elevation-2"
+      [class.mat-elevation-8]="true">
+      
+      <mat-card-header>
+        <div mat-card-avatar class="post-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <mat-card-title>{{ post.titulo }}</mat-card-title>
+        <mat-card-subtitle>
+          <div class="post-meta">
+            <span class="author">
+              <mat-icon inline>account_circle</mat-icon>
+              {{ post.autor }}
+            </span>
+            <span class="date">
+              <mat-icon inline>calendar_today</mat-icon>
+              {{ post.criadoEm ? formatDate(post.criadoEm) : '' }}
+            </span>
+          </div>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="post-content">{{ post.conteudo }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

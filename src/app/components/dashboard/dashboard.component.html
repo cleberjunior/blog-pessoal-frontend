@@ -76,13 +76,16 @@
       </mat-card-header>
       <mat-card-content>
         <mat-list>
-          <mat-list-item *ngFor="let post of stats.latestPosts" style="height: auto;">
+          <mat-list-item *ngFor="let post of stats.latestPostsWithTemas" style="height: auto;">
             <!-- <mat-icon matListIcon>article</mat-icon> -->
             <div matLine>
               <strong>{{ post.titulo }}</strong>
             </div>
             <div matLine class="post-meta">
               Por {{ post.autor }} • {{ post.criadoEm | date:'dd/MM/yyyy' }}
+            </div>
+            <div class="post-meta">
+              <span class="tema-badge">Tema: {{ post.tema }}</span>
             </div>
           </mat-list-item>
         </mat-list>

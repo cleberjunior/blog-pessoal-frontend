@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { AngularMaterialModule } from './components/commons/angular-material/angular-material.module';
 import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule, 
-    RouterOutlet, 
-    RouterLinkActive, 
+    CommonModule,
+    RouterOutlet,
     AngularMaterialModule
   ],
   templateUrl: './app.component.html',

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from '../commons/angular-material/angular-material.module';
-import { PostService } from '../../services/post.service';
 import { Post } from '../../models/posts.models';
+import { PostService } from '../../services/post.service';
+import { TemaService } from '../../services/tema.service';
+import { forkJoin, map } from 'rxjs';
 
 interface AuthorStats {
     name: string;
@@ -14,6 +16,7 @@ interface AuthorStats {
     totalPosts: number;
     totalAuthors: number;
     latestPosts: Post[];
+    latestPostsWithTemas: Post[],
     postsByAuthor: AuthorStats[];
     monthlyPosts: { month: string; count: number }[];
   }
@@ -32,6 +35,7 @@ export class DashboardComponent implements OnInit {
       totalPosts: 0,
       totalAuthors: 0,
       latestPosts: [],
+      latestPostsWithTemas: [],
       postsByAuthor: [],
       monthlyPosts: []
     };
@@ -51,7 +55,10 @@ export class DashboardComponent implements OnInit {
       }
     };
   
-    constructor(private postService: PostService) { }
+    constructor(
+      private readonly postService: PostService,
+      private readonly temaService: TemaService
+    ) {}
   
     ngOnInit(): void {
       this.loadDashboardData();
@@ -92,11 +99,27 @@ export class DashboardComponent implements OnInit {
           return 0;
         })
         .slice(0, 5);
+
+      const postObservables = this.stats.latestPosts.map(post =>
+        this.temaService.getTemaById(post.temaId).pipe(
+          // Cria um novo objeto com o post + a descrição do tema
+          map(tema => ({
+            ...post,
+            tema: tema.descricao
+          }))
+        )
+      );
+    
+      forkJoin(postObservables).subscribe(postsWithTema => {
+        this.stats.latestPostsWithTemas = postsWithTema;
+        //console.log(this.stats.latestPostsWithTemas); // Agora cada post tem um campo `tema`
+      });
   
       // Posts por mês
       //this.stats.monthlyPosts = this.getMonthlyStats(posts);
       // Posts por tema (simulando estatísticas mensais)
-      this.stats.monthlyPosts = this.getThemeStats(posts);
+      //this.stats.monthlyPosts = this.getThemeStats(posts);
+      this.getThemeStats(posts)
     }
   
     groupPostsByAuthor(posts: Post[]): { [key: string]: number } {
@@ -106,7 +129,25 @@ export class DashboardComponent implements OnInit {
       }, {} as { [key: string]: number });
     }
 
-    private getThemeStats(posts: Post[]): { month: string; count: number }[] {
+    private getThemeStats(posts: Post[]): void {
+      const observables = posts.map(post => this.temaService.getTemaById(post.temaId));
+
+      forkJoin(observables).subscribe(themes => {
+        const themeCounts: { [key: string]: number } = {};
+
+        themes.forEach(theme => {
+          const themeKey = theme.descricao;
+          themeCounts[themeKey] = (themeCounts[themeKey] || 0) + 1;
+        });
+
+        this.stats.monthlyPosts = Object.entries(themeCounts).map(([theme, count]) => ({
+          month: theme, // mantendo compatibilidade com o template
+          count
+        }));
+      });
+    }
+
+    /*private getThemeStats(posts: Post[]): { month: string; count: number }[] {
       const themeCounts: { [key: string]: number } = {};
       
       posts.forEach(post => {
@@ -119,7 +160,7 @@ export class DashboardComponent implements OnInit {
           month: theme, // Usando 'month' para manter compatibilidade com o template
           count
         }));
-    }
+    }*/
   
     /*private getMonthlyStats(posts: Post[]): { month: string; count: number }[] {
       const monthCounts: { [key: string]: number } = {};
@@ -136,9 +177,9 @@ export class DashboardComponent implements OnInit {
           month: this.formatMonth(month),
           count
         }));
-    }
+    }*/
   
-    private formatMonth(monthKey: string): string {
+    /*private formatMonth(monthKey: string): string {
       const [year, month] = monthKey.split('-');
       const date = new Date(parseInt(year), parseInt(month) - 1);
       return date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' });
